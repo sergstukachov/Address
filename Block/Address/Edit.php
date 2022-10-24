@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace SV\Address\Block\Address;
 
@@ -23,33 +24,58 @@ class Edit extends BlockEdit
     protected AddressOptions $addressOption;
     public function __construct(
 
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Directory\Helper\Data $directoryHelper,
-        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
-        \Magento\Framework\App\Cache\Type\Config $configCacheType,
-        \Magento\Directory\Model\ResourceModel\Region\CollectionFactory $regionCollectionFactory,
-                                \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory,
-                                \Magento\Customer\Model\Session $customerSession,
-                                \Magento\Customer\Api\AddressRepositoryInterface $addressRepository,
-                                \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory,
-                                \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer,
-                                \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
-                                AddressMetadataInterface $addressMetadata = null,
-                                Address $addressHelper = null,
-        AddressOptions $addressOption,
-        array $data = []
+       Context $context,
+       Data $directoryHelper,
+       EncoderInterface $jsonEncoder,
+       Config $configCacheType,
+       RegionCollectionFactory $regionCollectionFactory,
+       CollectionFactory $countryCollectionFactory,
+       Session $customerSession,
+       AddressRepositoryInterface $addressRepository,
+       AddressInterfaceFactory $addressDataFactory,
+       CurrentCustomer $currentCustomer,
+       DataObjectHelper $dataObjectHelper,
+       AddressMetadataInterface $addressMetadata = null,
+       Address $addressHelper = null,
+       AddressOptions $addressOption,
+       array $data = []
     )
     {
 
-        parent::__construct($context, $directoryHelper, $jsonEncoder, $configCacheType, $regionCollectionFactory, $countryCollectionFactory, $customerSession, $addressRepository, $addressDataFactory, $currentCustomer, $dataObjectHelper, $data, $addressMetadata, $addressHelper);
+        parent::__construct(
+            $context,
+            $directoryHelper,
+            $jsonEncoder,
+            $configCacheType,
+            $regionCollectionFactory,
+            $countryCollectionFactory,
+            $customerSession,
+            $addressRepository,
+            $addressDataFactory,
+            $currentCustomer,
+            $dataObjectHelper,
+            $data,
+            $addressMetadata,
+            $addressHelper);
         $this->addressOption = $addressOption;
     }
 
+    /**
+     * Get Custom Address Attribute Data Array
+     *
+     * @return array
+     */
     public function getAddressType(): array
     {
         return $this->addressOption->getAttributeArray();
     }
 
+    /**
+     * Get address attribute value
+     *
+     * @return false|mixed
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     public function getType()
     {
         $addressId = $this->getRequest()->getParam('id');
