@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 /**
  * Patch to create Customer Address Attribute
- *
- * Creates nickname custom address attribute
- *
- * @author Rakesh Jesadiya
- * @package Rbj_CustomerAddress
  */
 
 namespace SV\Address\Setup\Patch\Data;
@@ -80,9 +75,14 @@ class AddressAttributeOptions implements DataPatchInterface
 
         $customAttribute->setData(
             'used_in_forms',
-            ['adminhtml_customer_address',
+            ['adminhtml_checkout',
+                'adminhtml_customer',
+                'adminhtml_customer_address',
+                'customer_account_edit',
                 'customer_address_edit',
-                'customer_register_address']
+                'customer_register_address',
+                'customer_account_create',
+                'customer_address']
         );
         $customAttribute->save();
     }

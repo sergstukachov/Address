@@ -1,0 +1,14 @@
+{
+    "sv_quote_address": {
+        "column": {
+            "address_id": true,
+            "home_business": true
+        }
+    },
+    "sv_order_address": {
+        "column": {
+            "entity_id": true,
+            "home_business": true
+        }
+    }
+}

@@ -76,7 +76,7 @@ class Edit extends BlockEdit
      * @return false|mixed
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getType()
+    public function getHomeBusiness()
     {
         $addressId = $this->getRequest()->getParam('id');
         if ($addressId){

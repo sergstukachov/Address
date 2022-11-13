@@ -1,0 +1,42 @@
+<?php
+
+namespace SV\Address\Plugin\Checkout;
+
+class SaveAddress
+{
+    protected $quoteRepository;
+    public function __construct(
+        \Magento\Quote\Model\QuoteRepository $quoteRepository
+    ) {
+        $this->quoteRepository = $quoteRepository;
+    }
+
+    /**
+     * @param \Magento\Checkout\Model\ShippingInformationManagement $subject
+     * @param $cartId
+     * @param \Magento\Checkout\Api\Data\ShippingInformationInterface $addressInformation
+     * @return void
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     */
+    public function beforeSaveAddressInformation(
+        \Magento\Checkout\Model\ShippingInformationManagement $subject,
+                                                              $cartId,
+        \Magento\Checkout\Api\Data\ShippingInformationInterface $addressInformation
+    ) {
+//        $extensionAttributes = $addressInformation->getExtensionAttributes();
+//        $customField = $extensionAttributes->getHomeBusiness();
+//        $quote = $this->quoteRepository->getActive($cartId);
+//        $quote->setHomeBusiness($customField);
+//        //$quote->save();
+
+        $shippingAddress = $addressInformation->getShippingAddress();
+        $shippingAddressExtensionAttributes = $shippingAddress->getExtensionAttributes();
+        if ($shippingAddressExtensionAttributes) {
+            $customField = $shippingAddressExtensionAttributes->getHomeBusiness();
+            $shippingAddress->setHomeBusiness($customField);
+            $quote = $this->quoteRepository->getActive($cartId);
+            $quote->setHomeBusiness($customField);
+            $quote->save();
+        }
+    }
+}

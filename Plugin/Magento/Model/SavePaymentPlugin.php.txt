@@ -1,0 +1,27 @@
+<?php
+
+namespace SV\Address\Plugin\Magento\Model;
+
+use Magento\Checkout\Model\PaymentInformationManagement;
+use Magento\Quote\Api\Data\AddressInterface;
+use Magento\Quote\Api\Data\PaymentInterface;
+
+class SavePaymentPlugin
+{
+    protected $quoteRepository;
+
+    public function beforeSavePaymentInformationAndPlaceOrder(PaymentInformationManagement $subject,
+                                                                                           $cartId, PaymentInterface $paymentMethod,
+                                                              AddressInterface $billingAddress = null)
+    {
+        $orderHomeBusiness = $paymentMethod->getExtensionAttributes();
+
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $quoteRepository = $objectManager->create('Magento\Quote\Api\CartRepositoryInterface');
+
+        $quote = $quoteRepository->getActive($cartId);
+        $custom = $orderHomeBusiness->getHomeBusiness();
+        $quote->setHomeBusiness($custom);
+        $quote->save();
+    }
+}

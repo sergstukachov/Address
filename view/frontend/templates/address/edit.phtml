@@ -174,7 +174,7 @@ $regionProvider = $block->getRegionProvider();
                 <select id="type_address_id" name="home business"
                         title="<?= $block->escapeHtmlAttr(__('Home or Business')) ?>">
                     <?php foreach ($block->getAddressType() as $key => $value){ ?>
-                        <?php if ($value == $block->getType()): ?>
+                        <?php if ($value == $block->getHomeBusiness()): ?>
                             <option value="<?= $value ?>" selected><?= $block->escapeHtml(__($key)) ?></option>
                         <?php else: ?>
                             <option value="<?= $value ?>"><?= $block->escapeHtml(__($key)) ?></option>
